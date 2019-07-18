@@ -1,30 +1,23 @@
- 
-$(document).ready(function(){
-	$('#search-form').submit(function(event){
-		//stop submit the form, we will post it manually.
-        event.preventDefault();
-        register();
-	});
-}); 
-function register() { 
 
-	//alert("??");
-	debugger;
+function register() { 
 	var user = {}
 	user["username"] = $("#username").val();
-	user["password"] = $("#password").val(); 
-	
-	alert("!!");
+	user["password"] = $("#password").val();  
+	user["email"] = $("#email").val();  
 	$.ajax({
         method: "post",
         url: "/register",  
+        async:false,
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(user),
         success: function(data) {
-			alert("success")
+        		alert(data.msg)
+        		if (data.msg == "success") {
+        			 window.location.href = "/login";
+        		}
 		},
 		error: function(data) {
-			alert("fail")
+			alert("data")
 		}
 	})
 

@@ -29,9 +29,8 @@ public class SecurityServiceImpl implements UserDetailsService{
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(); 
         for(Role role : user.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
-        String psw = new BCryptPasswordEncoder().encode("1"); 
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), psw, authorities);
+        } 
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
 	}
 
 }

@@ -27,8 +27,7 @@ public class UserServiceImpl implements UserService {
 			return null;
 		} 
 		List<Role> roles = roleMapper.findRolesByUserId(user.getUserId()); 
-		user.setRoles(roles);
-		System.out.println(user.toString());
+		user.setRoles(roles); 
 		return user;
 	}
 

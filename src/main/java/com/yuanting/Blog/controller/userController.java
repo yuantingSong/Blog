@@ -1,8 +1,12 @@
 package com.yuanting.Blog.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yuanting.Blog.pojo.User;
 import com.yuanting.Blog.service.UserService;
 
-@RestController
+@Controller
 public class userController {
 
 	@Autowired
@@ -24,13 +28,15 @@ public class userController {
 	
 	@RequestMapping(value = "/register", method=RequestMethod.POST) 
     @ResponseBody
-	public  String register(@RequestBody User user) {     
-		System.out.println("user.getName() +  + " + user.getUsername());
-		if (userService.existUser(user.getUsername())) {
-			return "username existing";
+	public  Map<String, Object> register(@RequestBody User user) {      
+		Map<String, Object> json = new HashMap<>();
+		if (userService.existUser(user.getUsername())) { 
+			json.put("msg","username existing");
+			return json;
 		} 
-		
-		userService.registerUser(user);
-		return "success";
+		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  
+		userService.registerUser(user);  
+		json.put("msg","success");
+		return json;
 	} 
 }

@@ -9,9 +9,10 @@ public interface UserService {
 	
 	User findUserByUsername(String username);
 	
-	Long findUserIdByUsername(String username);
+	Integer findUserIdByUsername(String username);
 	
 	void registerUser(User user);
-	
+ 
+	boolean existUser(String username);
 	
 }

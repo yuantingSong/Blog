@@ -1,5 +1,7 @@
 package com.yuanting.Blog.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yuanting.Blog.pojo.User;
 import com.yuanting.Blog.service.UserService;
 
-@Controller
-public class indexController {
+@RestController
+public class userController {
 
 	@Autowired
 	UserService userService;
 	
-	@GetMapping("/")
-	public String welcome() { 
-		return "welcome";
-	}
-	@GetMapping("/login")
-	public String showLogin() {
-		return "login";
-	}
-	@GetMapping("/register")
-	public String showRegister() {
-		User user = new User();
-		//model.addAttribute("user", user);
-		return "register";
-	}
-	
-
+	@RequestMapping(value = "/register", method=RequestMethod.POST) 
+    @ResponseBody
+	public  String register(@RequestBody User user) {     
+		System.out.println("user.getName() +  + " + user.getUsername());
+		if (userService.existUser(user.getUsername())) {
+			return "username existing";
+		} 
+		
+		userService.registerUser(user);
+		return "success";
+	} 
 }

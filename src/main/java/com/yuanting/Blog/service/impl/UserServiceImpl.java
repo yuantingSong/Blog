@@ -23,25 +23,31 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserByUsername(String username) {
 		User user = userMapper.findUserByUsername(username);
-		if (user == null) {
-			return user;
-		}
-		List<Role> roles = roleMapper.findRolesByUserId(user.getUserId());
+		if (user == null) { 
+			return null;
+		} 
+		List<Role> roles = roleMapper.findRolesByUserId(user.getUserId()); 
 		user.setRoles(roles);
+		System.out.println(user.toString());
 		return user;
 	}
 
 	@Override
-	public Long findUserIdByUsername(String username) {
+	public Integer findUserIdByUsername(String username) {
 		return userMapper.findUserIdByUsername(username);
 	}
 
 	@Override
 	public void registerUser(User user) {
 		userMapper.insert(user);
-		Long userId = userMapper.findUserIdByUsername(user.getUsername());
+		int userId = userMapper.findUserIdByUsername(user.getUsername());
 		Role role = roleMapper.findRoleByRoleName("USER");
 		roleMapper.insertRole(userId, role.getRoleId());
+	}
+
+	@Override
+	public boolean existUser(String username) {
+		return this.findUserIdByUsername(username) != null;
 	}
 
 	

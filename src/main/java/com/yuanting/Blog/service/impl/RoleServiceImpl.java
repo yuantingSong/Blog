@@ -26,18 +26,18 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void insertRole(long userId, int roleId) {
+	public void insertRole(int userId, int roleId) {
 		roleMapper.insertRole(userId, roleId);
 	}
 
 	@Override
-	public List<Integer> findRoleIdsByUserId(long userId) {
+	public List<Integer> findRoleIdsByUserId(int userId) {
 		return roleMapper.findRoleIdsByUserId(userId);
 	}
  
 	
 	@Override
-	public List<Role> findRolesByUserId(long userId) {
+	public List<Role> findRolesByUserId(int userId) {
 		return roleMapper.findRolesByUserId(userId);
 	}
 	

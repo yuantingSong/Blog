@@ -17,10 +17,10 @@ public interface RoleService {
 	 
 	List<Role> listRoles();
 	 
-	void insertRole(@Param("userId") long userId, @Param("roleId") int roleId);
+	void insertRole(@Param("userId") int userId, @Param("roleId") int roleId);
 	 
-	List<Integer> findRoleIdsByUserId(@Param("userId") long userId);
+	List<Integer> findRoleIdsByUserId(@Param("userId") int userId);
 	  
-	List<Role> findRolesByUserId(long userId);
+	List<Role> findRolesByUserId(int userId);
 
 }

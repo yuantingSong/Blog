@@ -1,0 +1,25 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Register</title>
+</head>
+<body>
+	<h1>Register</h1>
+	<form id = "registerForm">
+		username <input type="text" id="username" placeholder="username" required> 
+		password <input type="password" id="password" placeholder="password" required>  
+		<div id="username_exist">
+			<span> the username existing </span>
+		</div> 
+		 <button onclick="register()">register</button>
+		
+	</form>
+	
+	<script type="text/javascript" src="js/register.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</body>
+</html>
+
+
+ 

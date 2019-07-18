@@ -1,6 +1,7 @@
 package com.yuanting.Blog.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,17 +17,22 @@ import com.yuanting.Blog.service.impl.SecurityServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-	@Autowired 
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.inMemoryAuthentication()
-			.withUser("user").password("password").roles("USER");
+	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder(); 
 	}
+
+	@Bean
+	public SecurityServiceImpl userDetailsService() {
+		return new SecurityServiceImpl(); 
+	}
+	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	    auth.userDetailsService(new SecurityServiceImpl())
-	        .passwordEncoder(new BCryptPasswordEncoder());
+	    auth.userDetailsService(userDetailsService())
+	        .passwordEncoder(passwordEncoder());
+ 
 	}
 	
 	@Override
@@ -40,11 +46,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/","/about").permitAll()
-			.antMatchers("/admin/**").hasRole("ADMIN") 
-		    .anyRequest().authenticated()
+			.antMatchers("/","/about").permitAll() 
+		//    .anyRequest().authenticated()
 		  .and()
-		  	.formLogin()  
-		    .permitAll();
+		  	.formLogin() 
+		  	.loginPage("/login")
+		  	.defaultSuccessUrl("/")
+            .usernameParameter("username")
+            .passwordParameter("password")
+		    .permitAll()
+		   .and()
+        	.logout()
+        	.permitAll();
+        http.csrf().disable();
 	}
 }

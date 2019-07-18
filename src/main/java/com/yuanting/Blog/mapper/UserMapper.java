@@ -11,7 +11,7 @@ import com.yuanting.Blog.pojo.User;
 public interface UserMapper {
  
 	@Select("select userId from user where username=#{username}")
-	Long findUserIdByUsername(String username);
+	Integer findUserIdByUsername(String username);
 	
     @Select("select * from user where username=#{username}")
     User findUserByUsername(String username);

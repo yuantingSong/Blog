@@ -21,12 +21,12 @@ public interface RoleMapper {
     @Select("select * from role")
     List<Role> listRoles();
     
-    @Insert("insert into user_role(User_id, Role_id) values (#{userId}, #{roleId})")
-    void insertRole(@Param("userId") long userId, @Param("roleId") int roleId);
+    @Insert("insert into user_role(userId, roleId) values (#{userId}, #{roleId})")
+    void insertRole(@Param("userId") int userId, @Param("roleId") int roleId);
 	
     @Select("select roleId from user_role where userId=#{userId}")
-    List<Integer> findRoleIdsByUserId(@Param("userId") long userId);
+    List<Integer> findRoleIdsByUserId(@Param("userId") int userId);
     
     @Select("select * from role where roleId in (select roleId from user_role where userId=#{userId})")
-    List<Role> findRolesByUserId(long userId);
+    List<Role> findRolesByUserId(int userId);
 }

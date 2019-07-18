@@ -4,11 +4,13 @@ import java.util.List;
 
 public class User {
 
-	private Long userId;
+	private int userId;
 	
 	private String username;
 	
 	private String password;
+	
+	private String email;
 	
 	private List<Role> roles;
 	
@@ -18,11 +20,17 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Long getUserId() {
+	public User(String username, String password, String email) {
+		this.username = username;
+		this.password = password;
+		this.email = email;
+	}
+	
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -57,5 +65,16 @@ public class User {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+	@Override
+	public String toString() {
+		return this.username + " " + this.password + " " + this.roles.size();
+	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

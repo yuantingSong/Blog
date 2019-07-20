@@ -37,15 +37,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	  web
-	  	.ignoring()
-	  	.antMatchers("/resources/**");
+//		web
+//		.ignoring()
+//	  	.antMatchers("/resources/**");
 }
 	  
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
+			.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "**/favicon.ico", "/index").permitAll()
 			.antMatchers("/","/about").permitAll() 
 		//    .anyRequest().authenticated()
 		  .and()

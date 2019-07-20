@@ -1,27 +1,29 @@
 <!DOCTYPE html> 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Register</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Register</title>  
+     <link  rel="stylesheet" type="text/css"  href="../static/css/register.css" th:href="@{/css/register.css}">
+	<script src="/js/register.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
-	<h1>Register</h1>
-	<form id = "registerForm">
-		username <input type="text" id="username" placeholder="username" required> 
-		password <input type="password" id="password" placeholder="password" required>  
-		
-		email <input type="email" id="email" placeholder="email" required>  
-		<div id="username_exist">
-			<span> the username existing </span>
-		</div> 
-		 <button onclick="register()">register</button>
-		
+	<div class="container">
+    <h1>Register</h1>
+    <hr>
+    <form id = "registerForm">
+			<label>Username <span id = "usernameMsg"></span><input type="text" id="username" placeholder="username" required onchange="checkUsername()"> </label><br> 
+			<label>Email <input type="email" id="email" placeholder="email" required>  </label>
+			<label>Password <input type="password" id="password" placeholder="password" required onchange="checkPassword()"></label> <br> 
+			<label>Confirm Password <input type="password" id="confirmPassword" placeholder="password" required onchange="checkPassword()"></label> <br>
+			<span id = "passwordMsg"></span> 
+			<button onclick="register()">register</button>
+			have an account	<a href="/login"> Login </a>
 	</form>
-	
-	<script type="text/javascript" src="js/register.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	</div>
 </body>
 </html>
+
 
 
  

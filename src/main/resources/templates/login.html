@@ -1,24 +1,22 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Login</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Login</title>  
+     <link  rel="stylesheet" type="text/css"  href="../static/css/login.css" th:href="@{/css/login.css}">
+	<script src="/js/login.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <body>
 	<h1>Login</h1>
-	<form action = "login" method = "post">
+	<form action = "/login" method = "post">
 		<p> username 
 			<input type="text" name="username" placeholder="username" required>
 			</p> 
 		<p>	password <input type="password" name="password" placeholder="password" required>
 		</p>
-		<input type="submit" name="submit" value="login">
-		
+		<input type="submit" name="submit" value="login"><br>
+		register an account	<a href="/user/register"> Register </a>
 	</form>
 </body>
-</html>
-
-<script>
-
-
-</script>
+</html> 

@@ -21,14 +21,21 @@ import com.yuanting.Blog.pojo.User;
 import com.yuanting.Blog.service.UserService;
 
 @Controller
+@RequestMapping("/user")
 public class userController {
 
 	@Autowired
 	UserService userService;
 	
+	@GetMapping("/register")
+	public String showRegister() { 
+		return "register";
+	}
+	
 	@RequestMapping(value = "/register", method=RequestMethod.POST) 
     @ResponseBody
-	public  Map<String, Object> register(@RequestBody User user) {      
+	public Map<String, Object> register(@RequestBody User user) {   
+		System.out.println("registering");
 		Map<String, Object> json = new HashMap<>();
 		if (userService.existUser(user.getUsername())) { 
 			json.put("msg","username existing");
@@ -37,6 +44,36 @@ public class userController {
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  
 		userService.registerUser(user);  
 		json.put("msg","success");
+		System.out.println(json.get("msg"));
 		return json;
 	} 
+	
+	@RequestMapping(value = "/checkUsername", method=RequestMethod.POST) 
+    @ResponseBody
+	public Map<String, Object> checkUsername(@RequestBody User user) {    
+		Map<String, Object> json = new HashMap<>();
+		if (userService.existUser(user.getUsername())) { 
+			json.put("msg","existing");
+			System.out.println(json.get("msg"));
+			return json; 
+		}
+		json.put("msg","username available");
+		System.out.println(json.get("msg"));
+		return json;
+	} 
+	@GetMapping(value="/profile")
+	public String getUserProfle() {
+		return null;
+	}
+	
+	@GetMapping(value="/updateProfile")
+	public String getUpdateProfile() {
+		return null;
+	}
+	
+	@PostMapping(value="/updateProfile")
+	public String updateProfile() {
+		return null;
+	}
+	
 }

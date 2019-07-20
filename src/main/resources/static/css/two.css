@@ -1,0 +1,18 @@
+.left{
+  width: 200px;
+  height: 600px;
+  background: red;
+  float: left;
+  display: table;
+  text-align: center;
+  line-height: 600px;
+  color: #fff;
+}
+
+.right{
+  margin-left: 210px;
+  height: 600px;
+  background: yellow;
+  text-align: center;
+  line-height: 600px;
+}

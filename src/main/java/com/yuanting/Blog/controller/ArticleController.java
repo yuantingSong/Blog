@@ -1,6 +1,7 @@
 package com.yuanting.Blog.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,28 +18,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.yuanting.Blog.pojo.Article;
+import com.yuanting.Blog.service.ArticleService;
  
 
 @Controller
 public class ArticleController {
- 
-	@GetMapping(value="/article/showAll") 
-	public String getShowAllArticles(){
-		return null; 
+	
+	@Autowired
+	ArticleService articleService;
+	
+	@GetMapping(value="/article") 
+	public String geArticles(){
+		return "article";
+	}
+	
+	@GetMapping(value="/article/list") 
+	@ResponseBody
+	public List<Article> getListArticles(){
+		return articleService.listArticles(); 
 	}
 	
 	@GetMapping(value="/article/view/{id}")
-	public String getViewArticle() {
-		return null;
+	public String getViewArticle(@PathVariable Long id) {
+		System.out.println(id);
+		Article article = articleService.getArticle(id);
+		System.out.println(article.getArticleTitle());
+		return "viewArticle";
+		
 	}
 	
 	@GetMapping(value="/article/modify/{id}")
-	public String getModifyArticle() {
+	public String getModifyArticle(Long id) {
 		return null;
 	}
 	
 	@PostMapping(value="/article/modify/{id}")
-	public String modifyArticle() {
+	public String modifyArticle(Long id) {
 		return null;
 	}
 	

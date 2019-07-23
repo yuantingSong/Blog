@@ -1,18 +1,19 @@
 <!DOCTYPE html> 
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Article</title>  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Article</title>  
      <link  rel="stylesheet" type="text/css"  href="../static/css/articleShow.css" th:href="@{/css/articleShow.css}">
 	<script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script> 
 	<script type="text/javascript" th:src="@{js/articleShow.js}"></script>
 </head>
 <body> 
 	<a href="/article"> Article </a>
-	<h1>Article</h1>   
-		Title: <label th:text="${article.articleTitle}"> Title </label> <br>
-		Author: <label th:text="${article.authorName}"> Author </label> <br>
-		<hr> 
-	<textarea rows = "30" cols = "30" th:text = "${article.content}"> you can write content here </textarea>
+	<form action="#" th:action="@{edit} th:object="${article}" method="post">
+		<p> Title: <input type="text" th:field="*{article.authorTitle}"/> </p> 
+		<textarea type = "text" rows = "30" cols = "30" th:field = "*{article.content}"> you can write content here </textarea>
+		<button> </button>
+	</form>
+    
 </body>
 </html> 

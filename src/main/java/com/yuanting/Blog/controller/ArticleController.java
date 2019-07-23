@@ -41,11 +41,10 @@ public class ArticleController {
 	}
 	
 	@GetMapping(value="/article/view/{id}")
-	public String getViewArticle(@PathVariable Long id) {
-		System.out.println(id);
-		Article article = articleService.getArticle(id);
-		System.out.println(article.getArticleTitle());
-		return "viewArticle";
+	public String getViewArticle(Model model,@PathVariable Long id) { 
+		Article article = articleService.getArticle(id); 
+		model.addAttribute("article", article);
+		return "articleShow";
 		
 	}
 	

@@ -1,7 +1,6 @@
 $(document).ready(function(){
-	alert("?>>>")
     $.ajax({
-        url: "/article/list",
+        url: "/articles",
         dataType: 'json',
         type: 'get',
         cache:false,
@@ -14,13 +13,12 @@ $(document).ready(function(){
                 event_data += '<td>'+article.articleTitle+'</td>'; 
                 event_data += '<td>'+article.authorName+'</td>';
                 event_data += '<td>'+article.Date+'</td>'; 
-                event_data += '<td>'+'<a href="/article/view/' + article.articleId + '">view</a>'+'</td>'; 
+                event_data += '<td>'+'<a href="/articles/' + article.articleId + '">view</a>'+'</td>'; 
                 event_data += '</tr>';
             });
             $("#listArticles").append(event_data);
         },
-        error: function(d){
-            /*console.log("error");*/
+        error: function(d){ 
             alert("404. Please wait until the File is Loaded.");
         }
     });

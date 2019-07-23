@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,13 +35,13 @@ public class ArticleController {
 		return "article";
 	}
 	
-	@GetMapping(value="/article/list") 
+	@GetMapping(value="/articles") 
 	@ResponseBody
 	public List<Article> getListArticles(){
 		return articleService.listArticles(); 
 	}
 	
-	@GetMapping(value="/article/view/{id}")
+	@GetMapping(value="/articles/{id}")
 	public String getViewArticle(Model model,@PathVariable Long id) { 
 		Article article = articleService.getArticle(id); 
 		model.addAttribute("article", article);

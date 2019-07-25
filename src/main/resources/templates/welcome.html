@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+    <link rel='stylesheet' th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script> 
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/css/bootstrap.min.js}"></script> 
 </head>
 <body> 
 <a href="/login"> Login </a>
@@ -10,19 +14,28 @@
 <a href="/article"> Article </a>
 <a href="/user/register"> Register </a>
 
-<div class="btn-group">
-    <button type="button" class="btn btn-default">按钮 1</button>
-    <button type="button" class="btn btn-default">按钮 2</button>
-    <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-        下拉
+
+<div class="dropdown">
+    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1" 
+            data-toggle="dropdown">
+        主题
         <span class="caret"></span>
     </button>
-    <ul class="dropdown-menu">
-        <li><a href="#">下拉链接 1</a></li>
-        <li><a href="#">下拉链接 2</a></li>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">Java</a>
+        </li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">数据挖掘</a>
+        </li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">数据通信/网络</a>
+        </li>
+        <li role="presentation" class="divider"></li>
+        <li role="presentation">
+            <a role="menuitem" tabindex="-1" href="#">分离的链接</a>
+        </li>
     </ul>
-    </div>
 </div>
 
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,23 +42,25 @@ public class ArticleController {
 		return articleService.listArticles(); 
 	}
 	
+	@PostMapping(value="/articles")
+	public Article createArticle(@RequestBody Article article) {
+		articleService.insertArticle(article);
+		article = articleService.getArticle(article.getArticleTitle());
+		return article;
+	}
+	
 	@GetMapping(value="/articles/{id}")
 	public String getViewArticle(Model model,@PathVariable Long id) { 
 		Article article = articleService.getArticle(id); 
 		model.addAttribute("article", article);
 		return "articleShow";
-		
 	}
 	
-	@GetMapping(value="/article/modify/{id}")
-	public String getModifyArticle(Long id) {
+	@PostMapping(value="/articles/{id}")
+	public String updateArticle(@PathVariable Long id) {
 		return null;
 	}
 	
-	@PostMapping(value="/article/modify/{id}")
-	public String modifyArticle(Long id) {
-		return null;
-	}
 	
 	@GetMapping(value="/article/write")
 	public String getWriteArticle() {

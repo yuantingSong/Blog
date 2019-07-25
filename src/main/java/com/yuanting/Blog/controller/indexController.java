@@ -24,6 +24,15 @@ public class indexController {
 	public String welcome() { 
 		return "welcome";
 	}
+	
+	@GetMapping("/test")
+	public String test() { 
+		return "test";
+	}
+	@GetMapping("/home")
+	public String home() { 
+		return "home";
+	}
 	@GetMapping("/login")
 	public String showLogin() {
 		return "login";

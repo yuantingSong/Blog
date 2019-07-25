@@ -32,7 +32,7 @@ public interface ArticleMapper {
     @Select("select articleId, articleTitle, authorName from article order by articleId desc")
     List<Article> listArticles();
     
-    @Select("select articleId, articleTitle, authorName from article where authorName=#{authorName} order by id desc")
+    @Select("select articleId, articleTitle, authorName from article where authorName=#{authorName} order by articleId desc")
     List<Article> listArticlesByAuthor(String authorName);
     
     

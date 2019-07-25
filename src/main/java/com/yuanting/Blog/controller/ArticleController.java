@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,8 +40,21 @@ public class ArticleController {
 	
 	@GetMapping(value="/articles") 
 	@ResponseBody
-	public List<Article> getListArticles(){
+	public List<Article> getArticles(){
 		return articleService.listArticles(); 
+	}
+	
+	@GetMapping(value="/myarticles") 
+	@ResponseBody
+	public List<Article> getMyArticles(){ 
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = null;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		return articleService.listArticles(username); 
 	}
 	
 	@PostMapping(value="/articles")

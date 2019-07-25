@@ -61,24 +61,38 @@
         </div>
       </nav>
 
-      <div id="Articles" class="container-fluid sidebar">	<h1>Article</h1>
-		<table class = "articles" id = "articles"> 
-			<thead> 
+      <div id="Articles" class="container-fluid sidebar">
+      	<h1>Articles</h1>
+		<table class = "table table-striped"  id = "articles"> 
+			<thead class="thead-dark"> 
 				<tr>
 					<th> ArticleId</th>
 					<th> ArticleTitle</th>
 					<th> Author</th> 
 					<th> Date</th>
 					<th> operation</th>
-				</tr>
+				</tr> 
 			 </thead>
+			 <tbody> 
+			 </tbody>
 		</table> 
       </div>
       <div id="MyArticles" class="container-fluid sidebar" style="display:none">
-        <h1 class="mt-4">MyArticle</h1>
-        <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
-      </div>
+        <h1 class="mt-4">MyArticles</h1>
+		<table class = "table table-striped"  id = "myarticles"> 
+			<thead class="thead-dark"> 
+				<tr>
+					<th> ArticleId</th>
+					<th> ArticleTitle</th>
+					<th> Author</th> 
+					<th> Date</th>
+					<th> operation</th>
+				</tr> 
+			 </thead>
+			 <tbody> 
+			 </tbody>
+		</table> 
+	 </div>
 		<div id="WriteArticle" class="container-fluid sidebar" style="display:none">
         <h1 class="mt-4">WriteArticle</h1>
         <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
@@ -121,14 +135,41 @@
       e.preventDefault();
       $("#wrapper").toggleClass("toggled");
     });
- 
-   	function articles(){
+
+    function myarticles() {
+   	    $.ajax({
+   	        url: "/myarticles",
+   	        dataType: 'json',
+   	        type: 'get',
+   	        cache:false,
+   	        success: function(data){  
+   	        	$("#myarticles").find("tbody").empty();
+   	            var event_data = '';
+   	            $.each(data, function(index, article){
+   	                /*console.log(value);*/
+   	                event_data += '<tr>';
+   	                event_data += '<td>'+article.articleId+'</td>';
+   	                event_data += '<td>'+article.articleTitle+'</td>'; 
+   	                event_data += '<td>'+article.authorName+'</td>';
+   	                event_data += '<td>'+article.Date+'</td>'; 
+   	                event_data += '<td>'+'<a href="/articles/' + article.articleId + '">view</a>'+'</td>'; 
+   	                event_data += '</tr>';
+   	            });
+   	            $("#myarticles").append(event_data);
+   	        },
+   	        error: function(d){ 
+   	            alert("404. Please wait until the File is Loaded.");
+   	        }
+   	    });
+	}
+   	function articles() {
    	    $.ajax({
    	        url: "/articles",
    	        dataType: 'json',
    	        type: 'get',
    	        cache:false,
-   	        success: function(data){ 
+   	        success: function(data){  
+   	        	$("#articles").find("tbody").empty();
    	            var event_data = '';
    	            $.each(data, function(index, article){
    	                /*console.log(value);*/

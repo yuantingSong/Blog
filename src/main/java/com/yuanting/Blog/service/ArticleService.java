@@ -28,6 +28,6 @@ public interface ArticleService {
 	
 	boolean modifyArticle(Article article, User user);
 	
-	
+	String markdownToHtml(String markdown);
 	
 }

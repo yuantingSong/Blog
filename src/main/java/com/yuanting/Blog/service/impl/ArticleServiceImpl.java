@@ -13,6 +13,7 @@ import com.yuanting.Blog.service.ArticleService;
 import com.yuanting.Blog.pojo.Article;
 import com.yuanting.Blog.pojo.User; 
 
+import org.markdown4j.Markdown4jProcessor;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -70,6 +71,16 @@ public class ArticleServiceImpl implements ArticleService{
 			return true;
 		} 
 		return false;
+	}
+
+	@Override
+	public String markdownToHtml(String markdown) {
+		Markdown4jProcessor processor = new Markdown4jProcessor();
+		try {
+			return processor.process(markdown); 
+		} catch (Exception e) {
+			return e.toString();
+		}
 	}
   
 }

@@ -4,16 +4,39 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Article</title>  
      <link  rel="stylesheet" type="text/css"  href="../static/css/articleShow.css" th:href="@{/css/articleShow.css}">
-	<script type="text/javascript" th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script> 
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script> 
 	<script type="text/javascript" th:src="@{js/articleShow.js}"></script>
 </head>
 <body> 
 	<a href="/article"> Article </a>
-	<form action="#" th:action="@{edit} th:object="${article}" method="post">
-		<p> Title: <input type="text" th:field="*{article.authorTitle}"/> </p> 
-		<textarea type = "text" rows = "30" cols = "30" th:field = "*{article.content}"> you can write content here </textarea>
-		<button> </button>
+	<form action="#" th:action="@{/article/write}"  method="post">
+		<p> Title: <input type="text" th:field="*{article.articleTitle}"/> </p> 
+		<textarea  id = "content" rows = "30" cols = "30" th:field = "*{article.content}"> you can write content here </textarea> <br> 
+		<button type = "button" class = "btn" th:value ="view" onclick="view()">view</button>  
+		
 	</form>
+    <div id="preview">
+    k
     
+    </div>
+    <script>
+	function view() {
+		var article={}
+		alert($("#content").val())
+		article["content"] = $("#content").val();
+		$.ajax({
+			url:"/article/write",
+			dataType:"json",
+			async:false,contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(article),
+			type:"post",
+			success: function(data) { 
+				alert(data.val);
+				$("#preview").append(data.val);
+			}
+		});
+	}
+
+    </script>
 </body>
 </html> 

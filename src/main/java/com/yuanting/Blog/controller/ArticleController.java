@@ -78,13 +78,19 @@ public class ArticleController {
 	
 	
 	@GetMapping(value="/article/write")
-	public String getWriteArticle() {
-		return null;
+	public String getWriteArticle(Model model) {
+		Article article = new Article();
+		model.addAttribute("article", article);
+		return "editArticle";
 	}
 	
 	@PostMapping(value="/article/write")
-	public String writeArticle() {
-		return null;
-	}
-	 
+	@ResponseBody
+	public Map<String, Object> writeArticle(@RequestBody Article article) { 
+		Map<String, Object> json = new HashMap<>();
+		System.out.println(article.getContent());
+		json.put("val", articleService.markdownToHtml(article.getContent()));
+		return json;
+	} 
+	
 }

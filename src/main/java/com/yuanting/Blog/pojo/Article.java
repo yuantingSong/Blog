@@ -15,6 +15,8 @@ public class Article {
 	
 	private String content;
 	
+	private String html;
+	
 	private boolean published;
 	 
 	public Article() {
@@ -75,6 +77,14 @@ public class Article {
 
 	public void setPublished(boolean published) {
 		this.published = published;
+	}
+
+	public String getHtml() {
+		return html;
+	}
+
+	public void setHtml(String html) {
+		this.html = html;
 	}
 
 }

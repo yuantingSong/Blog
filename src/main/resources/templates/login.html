@@ -3,20 +3,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Login</title>  
-     <link  rel="stylesheet" type="text/css"  href="../static/css/login.css" th:href="@{/css/login.css}">
-	<script src="/js/login.js"></script>
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link  rel="stylesheet" type="text/css"  href="../static/css/login.css" th:href="@{/css/login.css}"> 
+    <script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
 </head>
 <body>
-	<h1>Login</h1>
-	<form action = "/login" method = "post">
-		<p> username 
-			<input type="text" name="username" placeholder="username" required>
-			</p> 
-		<p>	password <input type="password" name="password" placeholder="password" required>
-		</p>
-		<input type="submit" name="submit" value="login"><br>
-		register an account	<a href="/user/register"> Register </a>
-	</form>
+	<div class="container">
+		<h1>Login</h1>
+		<hr>
+		<form action = "/login" method = "post">
+			<label> username <input type="text" name="username" placeholder="username" required> </label> 
+			<label>	password <input type="password" name="password" placeholder="password" required></label>
+			<label> remember me<input type="checkbox" name="remember"/></label>
+			<input class="btn" type="submit" name="submit" value="login"><br>
+		</form>
+		<label>register an account	<a href="/register"> Register </a></label> 
+	</div>
 </body>
 </html> 

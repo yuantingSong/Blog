@@ -20,58 +20,55 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yuanting.Blog.pojo.User;
 import com.yuanting.Blog.service.UserService;
 
-@Controller
-@RequestMapping("/user")
+@Controller 
 public class userController {
 
 	@Autowired
 	UserService userService;
+	
+	@GetMapping("/login")
+	public String showLogin() {
+		return "login";
+	}
 	
 	@GetMapping("/register")
 	public String showRegister() { 
 		return "register";
 	}
 	
-	@RequestMapping(value = "/register", method=RequestMethod.POST) 
+	@RequestMapping(value="/register", method=RequestMethod.POST) 
     @ResponseBody
 	public Map<String, Object> register(@RequestBody User user) {   
-		System.out.println("registering");
 		Map<String, Object> json = new HashMap<>();
 		if (userService.existUser(user.getUsername())) { 
-			json.put("msg","username existing");
+			json.put("message","username existing");
 			return json;
 		} 
 		user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  
 		userService.registerUser(user);  
-		json.put("msg","success");
-		System.out.println(json.get("msg"));
+		json.put("message","success");  
 		return json;
 	} 
 	
-	@RequestMapping(value = "/checkUsername", method=RequestMethod.POST) 
+	@RequestMapping(value="/checkUsername", method=RequestMethod.POST) 
     @ResponseBody
 	public Map<String, Object> checkUsername(@RequestBody User user) {    
 		Map<String, Object> json = new HashMap<>();
 		if (userService.existUser(user.getUsername())) { 
-			json.put("msg","existing");
-			System.out.println(json.get("msg"));
+			json.put("message","existing"); 
 			return json; 
 		}
-		json.put("msg","username available");
+		json.put("message","username available");
 		System.out.println(json.get("msg"));
 		return json;
 	} 
+	
 	@GetMapping(value="/profile")
 	public String getUserProfle() {
 		return null;
 	}
 	
-	@GetMapping(value="/updateProfile")
-	public String getUpdateProfile() {
-		return null;
-	}
-	
-	@PostMapping(value="/updateProfile")
+	@PostMapping(value="/profile")
 	public String updateProfile() {
 		return null;
 	}

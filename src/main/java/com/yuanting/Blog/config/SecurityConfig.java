@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "**/favicon.ico", "/index").permitAll()
 			.antMatchers("/","/about").permitAll() 
-		//    .anyRequest().authenticated()
+		    .anyRequest().authenticated()
 		  .and()
 		  	.formLogin() 
 		  	.loginPage("/login")
@@ -57,8 +57,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .passwordParameter("password")
 		    .permitAll()
 		   .and()
-        	.logout()
+        	.logout().deleteCookies("JSESSIONID")
         	.permitAll();
+		
+			http
+			.rememberMe().rememberMeParameter("remember-new").key("uniqueAndSecret").tokenValiditySeconds(86400);
         http.csrf().disable();
 	}
 }

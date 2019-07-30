@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yuanting.Blog.pojo.Article;
 import com.yuanting.Blog.service.ArticleService;
+import com.yuanting.Blog.service.UserService;
  
 
 @Controller
@@ -33,7 +35,10 @@ public class ArticleController {
 	@Autowired
 	ArticleService articleService;
 	
-	@GetMapping(value="/article") 
+	@Autowired
+	UserService userService;
+	
+	@GetMapping(value="/articlepage") 
 	public String geArticles(){
 		return "article";
 	}
@@ -44,6 +49,18 @@ public class ArticleController {
 		return articleService.listArticles(); 
 	}
 	
+	@PostMapping(value="/articles")
+	@ResponseBody
+	public Map<String, Object> createArticle(@RequestBody Article article) {
+		Map<String, Object> json = new HashMap<>();
+		articleService.createArticle(article);
+		article = articleService.getArticle(article.getArticleTitle());
+		json.put("message","success");
+		json.put("article", article);
+		return json;
+	}
+	
+	//todo : change url to /user/id/articles
 	@GetMapping(value="/myarticles") 
 	@ResponseBody
 	public List<Article> getMyArticles(){ 
@@ -57,25 +74,30 @@ public class ArticleController {
 		return articleService.listArticles(username); 
 	}
 	
-	@PostMapping(value="/articles")
-	public Article createArticle(@RequestBody Article article) {
-		articleService.insertArticle(article);
-		article = articleService.getArticle(article.getArticleTitle());
-		return article;
-	}
 	
 	@GetMapping(value="/articles/{id}")
 	public String getViewArticle(Model model,@PathVariable Long id) { 
 		Article article = articleService.getArticle(id); 
 		model.addAttribute("article", article);
-		return "articleShow";
+		return "editArticle";
 	}
 	
-	@PostMapping(value="/articles/{id}")
-	public String updateArticle(@PathVariable Long id) {
-		return null;
+	@PutMapping(value="/articles/{id}") 
+	@ResponseBody
+	public Map<String, Object> updateArticle(@PathVariable Long id, @RequestBody  Article article) {  
+		Map<String, Object> json = new HashMap<>();  
+		System.out.println(article.toString());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = null;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+		} else {
+			username = principal.toString();
+		} 
+		articleService.updateArticle(article, userService.findUserByUsername(username)); 
+		json.put("message","success"); 
+		return json;
 	}
-	
 	
 	@GetMapping(value="/article/write")
 	public String getWriteArticle(Model model) {

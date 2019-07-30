@@ -87,4 +87,11 @@ public class Article {
 		this.html = html;
 	}
 
+	@Override
+	public String toString() {
+		return "Article [articleId=" + articleId + ", articleTitle=" + articleTitle + ", authorName=" + authorName
+				+ ", publishDate=" + publishDate + ", updateDate=" + updateDate + ", content=" + content + ", html="
+				+ html + ", published=" + published + "]";
+	}
+
 }

@@ -13,14 +13,14 @@ import com.yuanting.Blog.pojo.Article;
 @Mapper 
 public interface ArticleMapper {
   
-    @Insert("insert into article(articleId,articleTitle,authorName,publishDate,updateDate,content) " +
-            "values(#{articleId},#{articleTitle},#{authorName},#{publishDate},#{updateDate},#{content})")
+    @Insert("insert into article(articleId,articleTitle,authorName,publishDate,updateDate,content,html) " +
+            "values(#{articleId},#{articleTitle},#{authorName},#{publishDate},#{updateDate},#{content},#{html})")
     void insertArticle(Article article);
     
     @Delete("delete from article where articleId=#{articleId}")
     void deleteArticle(Article article);
     
-    @Update("update article set articleTitle=#{articleTitle},updateDate=#{updateDate},content=#{content} where articleId=#{articleId}")
+    @Update("update article set articleTitle=#{articleTitle},updateDate=#{updateDate},content=#{content},html=#{html} where articleId=#{articleId}")
     void updateArticle(Article article);
     
     @Select("select * from article where articleTitle=#{articleTitle}")

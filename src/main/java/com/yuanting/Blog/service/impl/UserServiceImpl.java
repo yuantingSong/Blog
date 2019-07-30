@@ -44,9 +44,15 @@ public class UserServiceImpl implements UserService {
 		roleMapper.insertRole(userId, role.getRoleId());
 	}
 
+	//tool
 	@Override
 	public boolean existUser(String username) {
 		return this.findUserIdByUsername(username) != null;
+	}
+
+	@Override
+	public void update(User user) {
+		userMapper.update(user);
 	}
 
 	

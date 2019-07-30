@@ -6,13 +6,17 @@ import com.yuanting.Blog.pojo.User;
 
 @Service
 public interface UserService {
+
+	void registerUser(User user);
+	
+	void update(User user);
 	
 	User findUserByUsername(String username);
 	
 	Integer findUserIdByUsername(String username);
 	
-	void registerUser(User user);
  
+	//tool
 	boolean existUser(String username);
 	
 }

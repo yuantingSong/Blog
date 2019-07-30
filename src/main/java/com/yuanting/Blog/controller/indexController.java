@@ -22,17 +22,12 @@ public class indexController {
 
 	@Autowired
 	UserService userService;
-	
-	@GetMapping("/")
-	public String welcome() { 
-		return "welcome";
-	}
-	
+ 
 	@GetMapping("/test")
 	public String test() { 
 		return "test";
 	}
-	@GetMapping("/home")
+	@GetMapping(value = {"/","/home"})
 	public String home() { 
 		return "home";
 	}
@@ -49,5 +44,17 @@ public class indexController {
 		model.addAttribute("username", username);
 		return "user";
 	}
+	
+	@GetMapping("/resume")
+	public String showResume() {
+		return "resume";
+	}
+	
+	@GetMapping("/contact")
+	public String showContact() {
+		return "contact";
+	}
+	
+	
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yuanting.Blog.pojo.User;
+import com.yuanting.Blog.service.MailService;
 import com.yuanting.Blog.service.UserService;
 
 @Controller
@@ -23,8 +24,12 @@ public class indexController {
 	@Autowired
 	UserService userService;
  
+	@Autowired
+	MailService mailService;
+	
 	@GetMapping("/test")
 	public String test() { 
+		//mailService.sendEmail("ytsong95@gmail.com");
 		return "test";
 	}
 	@GetMapping(value = {"/","/home"})

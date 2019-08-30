@@ -1,0 +1,75 @@
+<!DOCTYPE html> 
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Article</title>  
+     <link  rel="stylesheet" type="text/css"  href="../static/css/articleShow.css" th:href="@{/css/articleShow.css}">
+	<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script> 
+	<script type="text/javascript" th:src="@{js/articleShow.js}"></script>
+</head>
+<body>  
+<h1> write Article</h1>
+	<form id="articleForm"> 
+		<input hidden=true id="articleId" name="articleId" type="text" th:field="*{article.articleId}"/>
+		<label> Title: <input name="articleTitle" type="text" th:field="*{article.articleTitle}"/> </label> <br>
+		<input hidden=true name="authorName" type="text" th:field="*{article.authorName}"/>
+		<label> publishDate: <input name="publishDate" type="text" th:field="*{article.publishDate}" readonly=true/></label> <br> 
+		<label> updateDate: <input name="updateDate" type="text" th:field="*{article.updateDate}"readonly=true/></label> <br>
+		<label> <textarea name="content" id = "content" rows = "30" cols = "30" th:field = "*{article.content}"> markdown formation </textarea></label> <br> 
+		<button type = "button" class = "btn" th:value ="write" onclick="write()">write</button>  
+		<button type = "button" class = "btn" th:value ="modify" onclick="modify()">modify</button>  
+	</form>
+    <div id="preview">
+    
+    </div>
+    <script>
+	function write() {
+		var article={}
+		alert($("#content").val())
+		article["content"] = $("#content").val();
+		$.ajax({
+			url:"/article/write",
+			dataType:"json",
+			async:false,contentType: "application/json; charset=utf-8",
+			data: JSON.stringify(article),
+			type:"post",
+			success: function(data) { 
+				alert(data.val);
+				$("#preview").html(data.val);
+			}
+		});
+	}
+
+	function modify() {
+		alert($("#articleForm").serialize());
+		var params = $("#articleForm").serializeArray().reduce(function(a, x) { a[x.name] = x.value; return a; }, {});;
+		var id = $("#articleId").val();
+
+		/*
+		$('form.myform').submit(function () {
+			  var $this = $(this)
+			    , viewArr = $this.serializeArray()
+			    , view = {};
+
+			  for (var i in viewArr) {
+			    view[viewArr[i].name] = viewArr[i].value;
+			  }
+
+			  //Do stuff with view object here (e.g. JSON.stringify?)
+			});
+		*/
+		$.ajax({
+			type:"put",
+			url:"/articles/"+id,
+			dataType:"json",
+			async:false,contentType: "application/json; charset=utf-8",
+			data:JSON.stringify(params),
+			success: function(data) {  
+				alert("sucess")
+			}
+		});
+	}
+
+    </script>
+</body>
+</html> 

@@ -38,11 +38,10 @@ public class ArticleController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping(value="/articlepage") 
-	public String geArticles(){
-		return "article";
+	@GetMapping(value="/articleCenter") 
+	public String getArticleCenter(){
+		return "articleCenter";
 	}
-	
 	@GetMapping(value="/articles") 
 	@ResponseBody
 	public List<Article> getArticles(){
@@ -51,8 +50,20 @@ public class ArticleController {
 	
 	@PostMapping(value="/articles")
 	@ResponseBody
-	public Map<String, Object> createArticle(@RequestBody Article article) {
+	public Map<String, Object> postArticles(@RequestBody Article article) {
 		Map<String, Object> json = new HashMap<>();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		String username = null;
+		if (principal instanceof UserDetails) {
+			username = ((UserDetails)principal).getUsername();
+		} else {
+			username = principal.toString();
+		}
+		if (username == null) {
+			json.put("message","fail");
+			return json;
+		}
+		article.setAuthorName(username);
 		articleService.createArticle(article);
 		article = articleService.getArticle(article.getArticleTitle());
 		json.put("message","success");
@@ -75,12 +86,18 @@ public class ArticleController {
 	}
 	
 	
+	@GetMapping(value="/articlepage") 
+	public String getArticlePage(){
+		return "article";
+	}
+	
 	@GetMapping(value="/articles/{id}")
 	public String getViewArticle(Model model,@PathVariable Long id) { 
 		Article article = articleService.getArticle(id); 
 		model.addAttribute("article", article);
 		return "editArticle";
 	}
+	
 	
 	@PutMapping(value="/articles/{id}") 
 	@ResponseBody
@@ -103,16 +120,21 @@ public class ArticleController {
 	public String getWriteArticle(Model model) {
 		Article article = new Article();
 		model.addAttribute("article", article);
-		return "editArticle";
+		return "writeArticle";
 	}
+	
 	
 	@PostMapping(value="/article/write")
 	@ResponseBody
 	public Map<String, Object> writeArticle(@RequestBody Article article) { 
 		Map<String, Object> json = new HashMap<>();
+		System.out.println("writing");
 		System.out.println(article.getContent());
+		articleService.createArticle(article);
+		
 		json.put("val", articleService.markdownToHtml(article.getContent()));
 		return json;
 	} 
+ 
 	
 }

@@ -37,9 +37,7 @@ public class ArticleServiceImpl implements ArticleService{
 		if (hasPermission(article, user)) {
 			articleMapper.deleteArticle(article);
 		}
-	}
-
- 
+	} 
 
 	@Override
 	public Article getArticle(String articleTitle) { 

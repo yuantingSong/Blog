@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 	    auth.userDetailsService(userDetailsService())
 	        .passwordEncoder(passwordEncoder());
+	    auth.inMemoryAuthentication().withUser("2").password(passwordEncoder().encode("2")).roles("USER", "ADMIN");
  
 	}
  
@@ -37,13 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-			.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "/", "/home").permitAll()
+			.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "/", "/register","/resume","/contact","/articleCenter").permitAll()
 			.antMatchers("/","/about").permitAll() 
 		    .anyRequest().authenticated()
 		  .and()
 		  	.formLogin() 
 		  	.loginPage("/login")
-		  	.defaultSuccessUrl("/home")
+		  	.defaultSuccessUrl("/")
             .usernameParameter("username")
             .passwordParameter("password")
 		    .permitAll()

@@ -22,6 +22,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId> 
+		</dependency>
 
 		<!-- markdown https://mvnrepository.com/artifact/org.commonjava.googlecode.markdown4j/markdown4j -->
 		<dependency>

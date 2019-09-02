@@ -26,6 +26,7 @@ public class SecurityServiceImpl implements UserDetailsService{
 		if (user == null) { 
 			throw new UsernameNotFoundException("user not exist");
 		} 
+		System.out.println(username);
         List<SimpleGrantedAuthority> authorities = new ArrayList<>(); 
         for(Role role : user.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));

@@ -32,8 +32,14 @@ public class indexController {
 		//mailService.sendEmail("ytsong95@gmail.com");
 		return "test";
 	}
-	@GetMapping(value = {"/","/home"})
-	public String home() { 
+	
+	@GetMapping(value = {"/"})
+	public String getIndex() { 
+		return "index";
+	}
+	
+	@GetMapping(value = {"/home"})
+	public String getHome() { 
 		return "home";
 	}
 

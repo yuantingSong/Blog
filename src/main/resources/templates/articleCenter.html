@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"> 
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Home</title> 
+	<title>Articles</title> 
     <link href="../static/css/bootstrap/bootstrap.min.css" th:href="@{/css/bootstrap/bootstrap.min.css}"rel="stylesheet" type="text/css" >
     <link href = "../static/css/sidebar.css" th:href="@{/css/sidebar.css}" rel="stylesheet">
 </head>
 <body> 
 <body>
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-		<a class="my-0 mr-md-auto font-weight-normal h3" href="/home">MyBlog</a>
+		<a class="my-0 mr-md-auto font-weight-normal h3" href="/">MyBlog</a>
 		<nav class="my-2 my-md-0 mr-md-3">
-		  <a class="p-2 text-dark" href="/articlesCenter">Articles</a>
+		  <a class="p-2 text-dark" href="/articleCenter">Articles</a>
 		  <a class="p-2 text-dark" href="/users">User Center</a>
 		  <a class="p-2 text-dark" href="/resume">Resume</a>
 		  <a class="p-2 text-dark" href="/contact">Contact</a>
-		</nav> 
- 		<a class="btn btn-outline-primary" href="/login">Login</a>
- 		<a class="btn btn-outline-primary" href="/register">Sign up</a>
+		</nav> 			
+		<div sec:authorize="isAuthenticated()">  
+			  <a class="btn btn-outline-primary" href="/logout">Logout</a>
+		</div>
+		<div sec:authorize="isAnonymous()">
+	 		<a class="btn btn-outline-primary" href="/login">Login</a>
+	 		<a class="btn btn-outline-primary" href="/register">Sign up</a>
+		</div>
+			
 	</div>
+	
 	<hr>
 	
   <div class="d-flex" id="wrapper"> 
     <!-- Sidebar --> 
     <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="sidebar-heading">Article Menu </div>
       <div class="list-group list-group-flush"> 
         <button   type="button" class="btn btn-primary list-group-item list-group-item-action bg-light" onclick="convert(event,'Articles')" >Articles</button>
         <button   type="button" class="btn btn-primary list-group-item list-group-item-action bg-light" onclick="convert(event,'MyArticles')" >MyArticles</button>
-        <button   type="button" class="btn btn-primary list-group-item list-group-item-action bg-light" onclick="convert(event,'WriteArticle')">WriteArticle</button>
-  
  
       </div>
-    </div>
-    <!-- /#sidebar-wrapper -->
+    </div> 
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle" >Toggle Menu</button>
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+        <button class="btn btn-primary" id="menu-toggle" >Menu</button>
+  
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
@@ -145,7 +147,7 @@
       $("#wrapper").toggleClass("toggled");
     });
 
-    function myarticles() {
+    function myarticles() { 
    	    $.ajax({
    	        url: "/myarticles",
    	        dataType: 'json',
@@ -167,11 +169,11 @@
    	            $("#myarticles").append(event_data);
    	        },
    	        error: function(d){ 
-   	            alert("404. Please wait until the File is Loaded.");
+   	            alert("Please login first");
    	        }
    	    });
 	}
-   	function articles() {
+   	function articles() {  
    	    $.ajax({
    	        url: "/articles",
    	        dataType: 'json',
@@ -192,7 +194,7 @@
    	            });
    	            $("#articles").append(event_data);
    	        },
-   	        error: function(d){ 
+   	        error: function(d){  
    	            alert("404. Please wait until the File is Loaded.");
    	        }
    	    });

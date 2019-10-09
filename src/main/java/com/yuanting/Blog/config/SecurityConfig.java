@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.yuanting.Blog.service.impl.SecurityServiceImpl;
+import com.yuanting.Blog.jwt.MyUserDetails;
  
 
 @Configuration
@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	@Bean
-	public SecurityServiceImpl userDetailsService() {
-		return new SecurityServiceImpl(); 
+	public MyUserDetails userDetailsService() {
+		return new MyUserDetails(); 
 	}
 	
 	@Override
@@ -39,8 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
 			.antMatchers("/css/**", "/js/**","/images/**", "/webjars/**", "/", "/register","/resume","/contact","/articleCenter").permitAll()
-			.antMatchers("/","/about").permitAll() 
+			.antMatchers("/articles","/about").permitAll() 
 		    .anyRequest().authenticated()
+	//	  .and()
+		 // 	.addFilter(new JWT)
 		  .and()
 		  	.formLogin() 
 		  	.loginPage("/login")
@@ -51,10 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		   .and()
         	.logout().deleteCookies("JSESSIONID")
         	.permitAll()
+        	.logoutSuccessUrl("/")
   		  .and().sessionManagement().maximumSessions(1);
 		
-			http
+		http
 			.rememberMe().rememberMeParameter("remember-new").key("uniqueAndSecret").tokenValiditySeconds(86400);
-        http.csrf().disable();
+        http
+        	.cors()
+        	.and()
+        	.csrf().disable();
 	}
 }

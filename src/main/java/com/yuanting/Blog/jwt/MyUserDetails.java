@@ -1,4 +1,4 @@
-package com.yuanting.Blog.service.impl;
+package com.yuanting.Blog.jwt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import com.yuanting.Blog.pojo.Role;
 import com.yuanting.Blog.pojo.User;
 import com.yuanting.Blog.service.UserService;
 
-public class SecurityServiceImpl implements UserDetailsService{
+public class MyUserDetails implements UserDetailsService{
 
 	@Autowired
 	UserService userService;

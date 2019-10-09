@@ -42,9 +42,11 @@ public class ArticleController {
 	public String getArticleCenter(){
 		return "articleCenter";
 	}
+	
 	@GetMapping(value="/articles") 
 	@ResponseBody
 	public List<Article> getArticles(){
+		System.out.println("listall articles");
 		return articleService.listArticles(); 
 	}
 	
@@ -82,6 +84,7 @@ public class ArticleController {
 		} else {
 			username = principal.toString();
 		}
+		System.out.println(username);
 		return articleService.listArticles(username); 
 	}
 	
